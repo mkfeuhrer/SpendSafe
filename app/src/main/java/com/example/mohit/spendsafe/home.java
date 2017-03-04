@@ -13,6 +13,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+
+import java.util.ArrayList;
+
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -40,7 +48,31 @@ public class home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        PieChart pieChart = (PieChart) findViewById(R.id.piechart);
+        pieChart.setUsePercentValues(true);
+        ArrayList<Entry> yvalues = new ArrayList<Entry>();
+        yvalues.add(new Entry(8f, 0));
+        yvalues.add(new Entry(15f, 1));
+        yvalues.add(new Entry(12f, 2));
+        yvalues.add(new Entry(25f, 3));
+        yvalues.add(new Entry(23f, 4));
+        yvalues.add(new Entry(17f, 5));
+
+        PieDataSet dataSet = new PieDataSet(yvalues, "Election Results");
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        xVals.add("January");
+        xVals.add("February");
+        xVals.add("March");
+        xVals.add("April");
+        xVals.add("May");
+        xVals.add("June");
+
+        PieData data = new PieData(xVals, dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        pieChart.setData(data);
     }
+
 
     @Override
     public void onBackPressed() {
