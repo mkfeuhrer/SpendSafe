@@ -1,5 +1,7 @@
 package com.example.mohit.spendsafe;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,18 +14,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import static android.R.attr.data;
+import static android.R.attr.entries;
 
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    PieChart pieChart ;
+    ArrayList<Entry> entries ;
+    ArrayList<String> PieEntryLabels ;
+    PieDataSet pieDataSet ;
+    PieData pieData ;
+    Button add,minus;
+    int k=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,31 +67,43 @@ public class home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        PieChart pieChart = (PieChart) findViewById(R.id.piechart);
-        pieChart.setUsePercentValues(true);
-        ArrayList<Entry> yvalues = new ArrayList<Entry>();
-        yvalues.add(new Entry(8f, 0));
-        yvalues.add(new Entry(15f, 1));
-        yvalues.add(new Entry(12f, 2));
-        yvalues.add(new Entry(25f, 3));
-        yvalues.add(new Entry(23f, 4));
-        yvalues.add(new Entry(17f, 5));
+        pieChart = (PieChart) findViewById(R.id.chart1);
 
-        PieDataSet dataSet = new PieDataSet(yvalues, "Election Results");
-        ArrayList<String> xVals = new ArrayList<String>();
+        entries = new ArrayList<>();
 
-        xVals.add("January");
-        xVals.add("February");
-        xVals.add("March");
-        xVals.add("April");
-        xVals.add("May");
-        xVals.add("June");
+        PieEntryLabels = new ArrayList<String>();
 
-        PieData data = new PieData(xVals, dataSet);
-        data.setValueFormatter(new PercentFormatter());
-        pieChart.setData(data);
+        float inputval=0.0f;
+        AddValuesToPIEENTRY(inputval,"");
+
+        pieDataSet = new PieDataSet(entries, "");
+        pieDataSet.setValueTextColor(Color.BLACK);
+        pieDataSet.setValueTextSize(15f);
+        pieData = new PieData(PieEntryLabels, pieDataSet);
+        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        pieChart.setData(pieData);
+        pieChart.animateY(3000);
+        pieChart.getLegend().setEnabled(false);
+        pieChart.setDescription("");
+        add = (Button)findViewById(R.id.add);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(home.this,addmoney.class);
+                startActivity(i);
+            }
+        });
+
+        // pieChart.saveToGallery("mychart.jpg", 85);
+
     }
 
+    public void AddValuesToPIEENTRY(float f,String data){
+
+        entries.add(new BarEntry(f, k));
+        PieEntryLabels.add(data);
+        k++;
+    }
 
     @Override
     public void onBackPressed() {
