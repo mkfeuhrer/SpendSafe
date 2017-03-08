@@ -41,4 +41,10 @@
         android:layout_weight="35"
         android:text="minus"/>
     </LinearLayout>
+    <com.github.mikephil.charting.charts.HorizontalBarChart
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/barchart"
+        android:layout_weight="30"/>
+
 </LinearLayout>

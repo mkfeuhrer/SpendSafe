@@ -3,7 +3,7 @@
     package="com.example.mohit.spendsafe">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addmoney"></activity>
+        <activity android:name=".addmoney" />
+        <activity android:name=".minusmoney"></activity>
     </application>
 
 </manifest>
